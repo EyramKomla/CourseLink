@@ -5,7 +5,7 @@ function landingpage() {
   return (
     <div >
         <p>landingpage</p>
-        <Link to='/'>Go to Sign In</Link>
+        <Link to='/'>Go to Sign up</Link>
     </div>
   )
 }
