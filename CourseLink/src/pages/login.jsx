@@ -10,13 +10,13 @@ function Login() {
                 <img src={SignInPic} alt='Sign In' className='h-full w-full object-scale-down rounded-4xl' />
             </div>
             <div className='h-full w-[50%] flex flex-col justify-center p-8'>
-                <h1 className='font-bold text-2xl'>Sign in</h1>
+                <h1 className='font-bold text-2xl'>Login</h1>
                 <form className='flex flex-col mt-4'>
                     <input type='email' placeholder='Email' className='mb-4 p-2 border rounded' />
                     <input type='password' placeholder='Password' className='mb-4 p-2 border rounded' />
-                    <button type='submit' className='bg-[#2fbaa1] text-white p-2 rounded'>Sign In</button>
+                    <button type='submit' className='bg-[#2fbaa1] text-white p-2 rounded'>Login</button>
                 </form>
-                <p className='mt-4'>Don't have an account? <Link to='/' className='text-[#2fbaa1]'>Go to Sign Up</Link></p>
+                <p className='mt-4'>Don't have an account? <Link to='/signup' className='text-[#2fbaa1]'>Go to Sign Up</Link></p>
                 
             </div>
         </div>
