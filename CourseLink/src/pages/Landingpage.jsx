@@ -21,27 +21,29 @@ function Landingpage() {
       </div>
 
       {/* Main content */}
-      <div className='w-full h-900 pl-28 pr-28 mt-30 flex flex-row flex-wrap gap-x-15 gap-y-2 border-2 border-solid border-black'>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        
+      <div className='w-full h-auto'>
+        <div className='w-full h-auto pl-28 pr-28 mt-30 flex flex-row flex-wrap gap-x-15 gap-y-2'>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+          <CourseCard/>
+
+        </div>
       </div>
 
       <p>landingpage</p>
