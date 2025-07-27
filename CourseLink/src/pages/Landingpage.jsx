@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Logo from '../assets/Courselink-logo-no-bg.png'
-import SearchBar from '../components/SearchBar'
-import CourseCard from '../components/CourseCard'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Logo from '../assets/Courselink-logo-no-bg.png';
+import SearchBar from '../components/SearchBar';
+import CourseCard from '../components/CourseCard';
 
 function Landingpage() {
 
