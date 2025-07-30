@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import SignInPic from '../assets/male-freelancer-working-from-home-vector.jpg'
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
+import { BiLoader } from 'react-icons/bi';
 
 function Login() {
 
@@ -56,8 +57,8 @@ function Login() {
 
                     <button type='submit' 
                             onClick={handleLogin}
-                            className='bg-[#2fbaa1] text-white p-2 rounded'>
-                                Login
+                            className='bg-[#2fbaa1] text-white p-2 rounded hover:cursor-pointer flex items-center justify-center'>
+                            {loading ? <BiLoader className='animate-spin text-2xl' /> : <p>Login</p>}
                     </button>
                 </form>
                 <p className='mt-4'>Don't have an account? <Link to='/signup' className='text-[#2fbaa1]'>Go to Sign Up</Link></p>

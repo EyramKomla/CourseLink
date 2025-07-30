@@ -2,25 +2,53 @@ import React, { useState } from 'react';
 import Logo from '../assets/Courselink-logo-no-bg.png';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { BiLoader } from 'react-icons/bi';
+import {  getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '../../firebase';
+
+
 
 function AddSource() {
 
         const [author, setAuthor] = useState("");
         const [courseName, setCourseName] = useState("");
-        const [resourceType, setResourceType] = useState("");
-        const [source, setSource] = useState("");
-        const [link, setLink] = useState("");
+        const [year, setYear] = useState("");
+        const [description, setDescription] = useState("");
+        const [link, setLink] = useState("N/A");
+        const [isLoading, setIsLoading] = useState(false);
+        const [file, setFile] = useState(null);
+        
+        const [previewURL, setPreviewURL] = useState(null);
+
+        const handleFileChange = (e) => {
+                const selectedFile = e.target.files[0];
+                setFile(selectedFile);
+        };
 
         const handleSubmit = async (e) =>{
                 e.preventDefault();
+                let sourcePath = "N/A";
                 try{
+                        setIsLoading(true);
+                        if (file) {
+                                const storageRef = ref(storage, `uploads/${file.name}`);
+                                await uploadBytes(storageRef, file);
+                                console.log("File uploaded successfully: ", storageRef["fullPath"]);
+                                sourcePath = await getDownloadURL(storageRef);
+
+                        }
+
                         const resourceRef = await addDoc(collection(db, "resources"), {
                                 author: author,
-                                courseName: courseName,
-                                resourceType: resourceType,
-                                source: source,
-                                link: link
-                        })
+                                year: year,
+                                courseTitle: courseName,
+                                description: description,
+                                link: link,
+                                sourcePath: sourcePath,
+                        });
+                        setIsLoading(false);
+                        
+                        
                         console.log("Document was sent with document id: ", resourceRef.id)
                 }catch(e){
                         console.error("Error adding document: ", e);
@@ -40,25 +68,24 @@ function AddSource() {
                 <h1 className='text-2xl font-bold'>Add new resource</h1>
 
                 <input type="text" 
+                        placeholder='Course Title - Course Topic' 
+                        onChange={(e) => setCourseName(e.target.value)}
+                        className='w-full h-14 border-1 rounded-xl pl-5 pr-5 bg-slate-100'/>
+                     
+
+                <input type="text"
+                        className='w-full h-14 border-1 rounded-xl pl-5 pr-5 bg-slate-100'
+                        onChange={(e) => setYear(e.target.value)}
+                        placeholder='Year'/>
+
+                <input type="text" 
                         placeholder='Your name' 
                         onChange={(e) => setAuthor(e.target.value)}
                         className='w-full h-14 border-1 rounded-xl pl-5 pr-5 bg-slate-100'/>
-
-                <input type="text" 
-                        placeholder='Course Name' 
-                        onChange={(e) => setCourseName(e.target.value)}
-                        className='w-full h-14 border-1 rounded-xl pl-5 pr-5 bg-slate-100'/>
-                
-                <select onChange={(e) => setResourceType(e.target.value)}
-                        className='w-full h-14 border-1 rounded-xl pl-5 pr-5 bg-slate-100'>
-                                <option value="" disabled selected>Select Resource Type</option>
-                                <option value="Class Group">Class Group</option>
-                                <option value="Study Group">Study Group</option>
-                        </select>
                 
                 <input type="text" 
-                        placeholder='Source (Where you found resource)' 
-                        onChange={(e) => setSource(e.target.value)}
+                        placeholder='One line description of the resource' 
+                        onChange={(e) => setDescription(e.target.value)}
                         className='w-full h-14 border-1 rounded-xl pl-5 pr-5 bg-slate-100'/>                
 
                 <input type="text" 
@@ -66,12 +93,19 @@ function AddSource() {
                         onChange={(e) => setLink(e.target.value)}
                         className='w-full h-14 border-1 rounded-xl pl-5 pr-5 bg-slate-100'/>
                 
-                <input type="text" placeholder='Drop file here'
-                        className='w-full h-50 border-1 rounded-xl pl-5 pr-5 bg-slate-100'/>
+                <div className='w-full h-50 border-1 rounded-xl p-5 bg-slate-100 flex flex-col items-center justify-start gap-y-2'>
+                        <input type="file" placeholder='Drop file here' 
+                                accept="image/*,audio/*,video/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx" 
+                                onChange={handleFileChange}
+                                className='w-full h-[50%] border-1 rounded-xl pl-5 pr-5 bg-slate-500'/>
+
+                        
+                </div>
+
                 <button type="submit" 
-                        className='bg-[#2fbaa1] rounded-md w-36 h-14 text-white'
+                        className='bg-[#2fbaa1] rounded-md w-36 h-14 text-white flex justify-center items-center hover:cursor-pointer'
                         onClick={handleSubmit}>
-                                Add Resource
+                        {isLoading ? <BiLoader className='animate-spin text-2xl' /> : <p>Add Resource</p>}
                 </button>
             </div>
         </form>
